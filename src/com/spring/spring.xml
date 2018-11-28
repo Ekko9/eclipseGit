@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- 启用注解扫描 -->
+ <context:component-scan base-package="com.spring"></context:component-scan>
+<!--  <bean id="f" class="com.spring.demo.Demo01" scope="ssingleton" lazy-init="true" ></bean>  -->
+ <!-- 接口实现类模式实例 -->
+ <bean id="uService" class="com.spring.service.UserServiceImpl"></bean>
+ <!-- 静态工厂模式实例 -->
+ <bean id="uService1" class="com.spring.service.UserFactory" factory-method="getUs"></bean>
+ <!-- 普通工厂模式实例 -->
+ <bean id="factory" class="com.spring.service.UserFactory"></bean>
+ <bean id="uService2" factory-bean="factory" factory-method="getUs1"></bean>
+ 
+ <!-- 构造方法注入 -->
+ <bean id="boy" class="com.spring.Boy">
+ <!-- 根据索引注入 -->
+ <!-- <constructor-arg index="0">
+ 	<value>20</value>
+ </constructor-arg>
+ <constructor-arg index="1">
+ 	<value>lisi</value>
+ </constructor-arg>
+ <constructor-arg index="2">
+ 	<value>nv</value>
+ </constructor-arg> -->
+ <!-- 根据类型注入 -->
+ <constructor-arg type="java.lang.String">
+ 	<value>zhaosi</value>
+ </constructor-arg>
+  <constructor-arg type="java.lang.String">
+ 	<value>nan</value>
+ </constructor-arg>
+ </bean>
+ 
+ <!-- setter注入 -->
+ <bean id="g" class="com.spring.Girl">
+ 	<property name="b" ref="boy"></property>
+ 	<property name="uid" value="1001"></property>
+ 	<property name="uname" value="zhangsan"></property>
+ 	<property name="list">
+ 		<list>
+ 			<value>123</value>
+ 			<value>sss</value>
+ 			<value>123</value>
+ 			<ref bean="boy" />
+ 		</list>
+ 	</property>
+ 	<property name="set">
+ 		<set>
+ 			<value>123</value>
+ 			<value>sss</value>
+ 			<value>123</value>
+ 			<ref bean="boy" />
+ 		</set>
+ 	</property>
+ 	<property name="map">
+ 		<map>
+ 			<entry key="map001">
+ 				<value>1002</value>
+ 			</entry>
+ 			<entry key="map002">
+ 			<ref bean="boy"/>
+ 			</entry>
+ 		</map>
+ 	</property>
+ 	<property name="arrays">
+ 		<array>
+ 			<value>123</value>
+ 			<value>sss</value>
+ 			<value>123</value>
+ 			<ref bean="boy" />
+ 		</array>
+ 	</property>
+ </bean>
+ 
+ <!-- 三层架构的搭建 -->
+ <!-- <bean id="perDao" class="com.spring.dao.PerpDao"></bean>
+ <bean id="perService" class="com.spring.service.PerpService">
+ 	<property name="pd" ref="perDao"></property>
+ </bean> -->
+ <!-- more bean definitions for data access objects go here -->
+</beans>
